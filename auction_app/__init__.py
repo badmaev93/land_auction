@@ -206,8 +206,8 @@ class Group(BaseGroup):
 class Player(BasePlayer):
     # Индивидуальные параметры
     true_value = models.IntegerField(doc="Оценка ценности тура игроком")
-    demand_intercept = models.IntegerField(doc="Свободный член функции спроса")
-    demand_slope = models.FloatField(doc="Наклон функции спроса")
+    demand_intercept = models.IntegerField(doc="Свободный член функции спроса", default=0)
+    demand_slope = models.FloatField(doc="Наклон функции спроса", default=0.0)
 
     # Ставки
     bid_amount = models.IntegerField(
@@ -262,14 +262,14 @@ class DemandInfo(Page):
         prices = list(range(8000, 18000, 1000))
         demand_points = []
         for price in prices:
-            q = self.get_demand_at_price(price)
+            q = self.player.get_demand_at_price(price)
             demand_points.append({'price': price, 'quantity': q})
 
         return dict(
-            true_value=self.true_value,
+            true_value=self.player.true_value,
             demand_points=demand_points,
-            demand_intercept=self.demand_intercept,
-            demand_slope=self.demand_slope,
+            demand_intercept=self.player.demand_intercept,
+            demand_slope=self.player.demand_slope,
         )
 
 
