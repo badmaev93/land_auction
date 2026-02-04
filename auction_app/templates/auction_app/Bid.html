@@ -1,0 +1,21 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Сделайте вашу ставку
+{% endblock %}
+
+{% block content %}
+
+    <p>
+        Ваша "истинная ценность" путевки: <b>{{ player.true_value }}</b>.
+    </p>
+    <p>
+        Пожалуйста, введите вашу ставку за одну путевку.
+    </p>
+
+    {% formfields %}
+
+    <button class="otree-btn-next btn btn-primary">Отправить</button>
+
+{% endblock %}

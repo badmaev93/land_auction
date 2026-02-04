@@ -1,0 +1,58 @@
+{{ block title }}
+    Сводка по раунду {{ round_number }}
+{{ endblock }}
+
+{{ block content }}
+<div class="card mb-4">
+    <div class="card-header bg-primary text-white">
+        <h5 class="mb-0">История ваших результатов</h5>
+    </div>
+    <div class="card-body">
+        <table class="table table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th>Раунд</th>
+                    <th>Ваша ставка</th>
+                    <th>Выиграно</th>
+                    <th>Заплачено</th>
+                    <th>Прибыль</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{ for h in history }}
+                <tr>
+                    <td>{{ h.round }}</td>
+                    <td>{{ h.bid }} руб.</td>
+                    <td>{{ h.won }}</td>
+                    <td>{{ h.paid }} руб.</td>
+                    <td class="{{ if h.profit > 0 }}text-success{{ elif h.profit < 0 }}text-danger{{ endif }}">
+                        <strong>{{ h.profit }}</strong>
+                    </td>
+                </tr>
+                {{ endfor }}
+            </tbody>
+            <tfoot class="table-info">
+                <tr>
+                    <td colspan="4"><strong>Общая прибыль:</strong></td>
+                    <td class="{{ if total_profit > 0 }}text-success{{ elif total_profit < 0 }}text-danger{{ endif }}">
+                        <strong>{{ total_profit }}</strong>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>
+
+{{ if is_last_round }}
+<div class="alert alert-success">
+    <h4>Эксперимент завершён!</h4>
+    <p>Спасибо за участие в аукционе путёвок заповедника "Земля леопарда".</p>
+    <p>Ваш итоговый результат: <strong>{{ total_profit }}</strong></p>
+</div>
+{{ else }}
+<div class="alert alert-info">
+    <p>Приготовьтесь к следующему раунду!</p>
+</div>
+{{ next_button }}
+{{ endif }}
+{{ endblock }}

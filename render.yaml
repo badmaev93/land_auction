@@ -1,0 +1,33 @@
+databases:
+  - name: leopardland
+    databaseName: leopardland
+    user: leopardland
+    plan: free
+
+services:
+  - type: web
+    name: otree-web
+    env: python
+    plan: free
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "otree prodserver1of2"
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: leopardland
+          property: connectionString
+      - key: OTREE_PRODUCTION
+        value: 1
+  - type: worker
+    name: otree-worker
+    env: python
+    plan: free
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "otree prodserver2of2"
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: leopardland
+          property: connectionString
+      - key: OTREE_PRODUCTION
+        value: 1

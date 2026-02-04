@@ -1,0 +1,55 @@
+{{ block title }}
+    Ваша функция спроса
+{{ endblock }}
+
+{{ block content }}
+<div class="card mb-4">
+    <div class="card-header bg-primary text-white">
+        <h5>Информация о вашем рынке</h5>
+    </div>
+    <div class="card-body">
+        <p>
+            Вы - туроператор. Ваши клиенты готовы покупать туры по следующим ценам:
+        </p>
+
+        <div class="alert alert-warning">
+            <strong>Ваша оценка ценности одного тура:</strong> {{ true_value }} руб.
+        </div>
+
+        <h5>Ретроспективные данные о продажах</h5>
+        <p class="text-muted">
+            Количество туров, которое вы можете продать при разных ценах:
+        </p>
+
+        <table class="table table-striped table-bordered">
+            <thead class="table-dark">
+                <tr>
+                    <th>Цена тура (руб.)</th>
+                    <th>Примерное количество продаж</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{ for point in demand_points }}
+                <tr>
+                    <td>{{ point.price }}</td>
+                    <td>{{ point.quantity }}</td>
+                </tr>
+                {{ endfor }}
+            </tbody>
+        </table>
+
+        <div class="alert alert-info">
+            <h6>Подсказка</h6>
+            <p>
+                Ваш спрос примерно описывается формулой:<br>
+                <code>Q = {{ demand_intercept }} + ({{ demand_slope }}) × P</code>
+            </p>
+            <p class="mb-0">
+                Чем выше цена, тем меньше туров вы сможете продать.
+            </p>
+        </div>
+    </div>
+</div>
+
+{{ next_button }}
+{{ endblock }}

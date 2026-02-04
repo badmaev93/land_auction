@@ -1,0 +1,71 @@
+{{ block title }}
+    Добро пожаловать в аукцион путёвок
+{{ endblock }}
+
+{{ block content }}
+<div class="card mb-4">
+    <div class="card-header bg-success text-white">
+        <h4>Заповедник "Земля леопарда"</h4>
+    </div>
+    <div class="card-body">
+        <p class="lead">
+            Вы участвуете в аукционе на получение путёвок для посещения заповедника.
+        </p>
+
+        <div class="alert alert-info">
+            <h5>Тип аукциона: {{ auction_type_name }}</h5>
+            <p>
+                {{ if auction_type == 'uniform' }}
+                    <strong>Аукцион единой цены:</strong> все победители платят одинаковую цену отсечения
+                    (лучшая непобедившая заявка).
+                {{ elif auction_type == 'first_price' }}
+                    <strong>Аукцион первой цены:</strong> каждый победитель платит свою собственную ставку.
+                    Чем выше ставка - тем больше платите!
+                {{ elif auction_type == 'vcg' }}
+                    <strong>Механизм VCG:</strong> каждый победитель платит сумму, равную внешним эффектам
+                    на других участников. Оптимальная стратегия - указывать истинную ценность.
+                {{ endif }}
+            </p>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Параметры аукциона</h5>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item d-flex justify-content-between">
+                                <span>Путёвок на продажу:</span>
+                                <strong>{{ items_available }}</strong>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between">
+                                <span>Себестоимость тура:</span>
+                                <strong>{{ tour_cost }} руб.</strong>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between">
+                                <span>Раунд:</span>
+                                <strong>{{ round_number }} из {{ num_rounds }}</strong>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Как играть</h5>
+                        <ol>
+                            <li>Изучите свою функцию спроса</li>
+                            <li>Сделайте ставку (цена и количество)</li>
+                            <li>Дождитесь результатов аукциона</li>
+                            <li>Узнайте свою прибыль</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{ next_button }}
+{{ endblock }}

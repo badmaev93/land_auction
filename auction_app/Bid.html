@@ -1,0 +1,87 @@
+{{ block title }}
+    Сделайте ставку
+{{ endblock }}
+
+{{ block content }}
+<div class="row">
+    <div class="col-md-8">
+        <div class="card mb-4">
+            <div class="card-header bg-warning">
+                <h5 class="mb-0">Форма заявки на аукцион</h5>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    <div class="mb-3">
+                        <label class="form-label">
+                            <strong>Ваша ставка за одну путёвку (руб.)</strong>
+                        </label>
+                        {{ formfield 'bid_amount' }}
+                        <div class="form-text">
+                            Укажите максимальную цену, которую вы готовы заплатить за одну путёвку.
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">
+                            <strong>Количество путёвок</strong>
+                        </label>
+                        {{ formfield 'bid_quantity' }}
+                        <div class="form-text">
+                            Максимум: {{ items_available }} путёвок доступно в этом раунде.
+                        </div>
+                    </div>
+
+                    {{ next_button }}
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card mb-3">
+            <div class="card-header bg-info text-white">
+                <h6 class="mb-0">Напоминание</h6>
+            </div>
+            <div class="card-body">
+                <ul class="list-unstyled mb-0">
+                    <li><strong>Ваша оценка:</strong> {{ true_value }} руб.</li>
+                    <li><strong>Себестоимость:</strong> {{ tour_cost }} руб.</li>
+                    <li><strong>Тип аукциона:</strong>
+                        {{ if auction_type == 'uniform' }}
+                            Единая цена
+                        {{ elif auction_type == 'first_price' }}
+                            Первая цена
+                        {{ elif auction_type == 'vcg' }}
+                            VCG
+                        {{ endif }}
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header bg-secondary text-white">
+                <h6 class="mb-0">Стратегия</h6>
+            </div>
+            <div class="card-body">
+                {{ if auction_type == 'uniform' }}
+                    <p class="small">
+                        При аукционе единой цены все победители платят одинаковую цену.
+                        Рекомендуется ставить близко к истинной ценности.
+                    </p>
+                {{ elif auction_type == 'first_price' }}
+                    <p class="small">
+                        <strong>Внимание!</strong> Вы заплатите свою ставку!
+                        Занижайте ставку, чтобы получить прибыль.
+                    </p>
+                {{ elif auction_type == 'vcg' }}
+                    <p class="small">
+                        В VCG оптимально указывать истинную ценность.
+                        Вы заплатите только внешние эффекты.
+                    </p>
+                {{ endif }}
+            </div>
+        </div>
+    </div>
+</div>
+{{ endblock }}

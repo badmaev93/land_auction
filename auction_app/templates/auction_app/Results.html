@@ -1,0 +1,54 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Результаты
+{% endblock %}
+
+{% block content %}
+
+    <h4>
+        {% if player.is_winner %}
+            Поздравляем, вы выиграли!
+        {% else %}
+            К сожалению, в этот раз вы не выиграли.
+        {% endif %}
+    </h4>
+
+    <p>
+        Единая цена для победителей (ставка самого высокого из проигравших) составила: <b>{{ clearing_price }}</b>.
+    </p>
+
+    <ul>
+        <li>Ваша истинная ценность: <b>{{ player.true_value }}</b></li>
+        <li>Ваша ставка: <b>{{ player.bid_amount }}</b></li>
+        {% if player.is_winner %}
+            <li>Вы заплатили: <b>{{ clearing_price }}</b></li>
+            <li>Ваш выигрыш: <b>{{ player.payoff }}</b> ({{ player.true_value }} - {{ clearing_price }})</li>
+        {% else %}
+             <li>Ваш выигрыш: <b>{{ player.payoff }}</b></li>
+        {% endif %}
+    </ul>
+
+    <hr>
+
+    <h5>Все ставки в вашей группе:</h5>
+    <table class="table">
+        <tr>
+            <th>Игрок</th>
+            <th>Ставка</th>
+            <th>Результат</th>
+        </tr>
+        {% for p in group.get_players %}
+            <tr class{% if p.id_in_group == player.id_in_group %}"table-info"{% endif %}>
+                <td>{% if p.id_in_group == player.id_in_group %}Вы (Игрок {{ p.id_in_group }}){% else %}Игрок {{ p.id_in_group }}{% endif %}</td>
+                <td>{{ p.bid_amount }}</td>
+                <td>{% if p.is_winner %}Победитель{% else %}Проигравший{% endif %}</td>
+            </tr>
+        {% endfor %}
+    </table>
+
+
+    <button class="otree-btn-next btn btn-primary">Далее</button>
+
+{% endblock %}
