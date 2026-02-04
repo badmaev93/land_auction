@@ -205,7 +205,7 @@ class Group(BaseGroup):
 
 class Player(BasePlayer):
     # Индивидуальные параметры
-    true_value = models.IntegerField(doc="Оценка ценности тура игроком")
+    true_value = models.IntegerField(doc="Оценка ценности тура игроком", default=0)
     demand_intercept = models.IntegerField(doc="Свободный член функции спроса", default=0)
     demand_slope = models.FloatField(doc="Наклон функции спроса", default=0.0)
 
