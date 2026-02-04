@@ -262,14 +262,14 @@ class DemandInfo(Page):
         prices = list(range(8000, 18000, 1000))
         demand_points = []
         for price in prices:
-            q = self.player.get_demand_at_price(price)
+            q = self.get_demand_at_price(price)
             demand_points.append({'price': price, 'quantity': q})
 
         return dict(
-            true_value=self.player.true_value,
+            true_value=self.true_value,
             demand_points=demand_points,
-            demand_intercept=self.player.demand_intercept,
-            demand_slope=self.player.demand_slope,
+            demand_intercept=self.demand_intercept,
+            demand_slope=self.demand_slope,
         )
 
 
